@@ -18,8 +18,15 @@ export const registerUserSchema = z
     password: z
       .string()
       .min(8, "Password minimal 8 karakter")
-      .max(72, "Password maksimal 72 karakter"),
+      .max(72, "Password maksimal 72 karakter")
+      .regex(
+        /[!@#$%^&*(),.?":{}|<>_\-+=]/,
+        "Password harus mengandung minimal 1 karakter khusus",
+      ),
   })
   .strict();
+export const userIdSchema = z.object({
+  id: z.string().uuid("ID tidak valid"),
+});
 
 export type RegisterUserRequest = z.infer<typeof registerUserSchema>;
